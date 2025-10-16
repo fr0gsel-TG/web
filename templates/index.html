@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}Главная - TonStore{% endblock %}
+
+{% block content %}
+<!-- Герой секция -->
+<div class="row align-items-center mb-5">
+    <div class="col-md-6">
+        <h1 class="display-4">TonStore</h1>
+        <p class="lead">Лучшие смартфоны Apple по выгодным ценам</p>
+        <a href="/catalog" class="btn btn-primary btn-lg">
+            <i class="fas fa-shopping-bag"></i> Смотреть каталог
+        </a>
+    </div>
+    <div class="col-md-6 text-center">
+        <i class="fas fa-mobile-alt" style="font-size: 200px; color: #007bff;"></i>
+    </div>
+</div>
+
+<!-- Рекомендуемые товары -->
+<h2 class="mb-4">Рекомендуемые товары</h2>
+<div class="row">
+    {% for product in featured_products %}
+    <div class="col-md-4 mb-4">
+        <div class="card product-card">
+            <img src="{{ product.image_url if product.image_url else 'https://via.placeholder.com/300x200?text=No+Image' }}" 
+                 class="card-img-top product-image" alt="{{ product.model }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ product.model[:50] }}{% if product.model|length > 50 %}...{% endif %}</h5>
+                <p class="card-text">
+                    <span class="badge bg-secondary">{{ product.category }}</span>
+                    <br>Цвет: {{ product.current_color }}
+                    <br>Память: {{ product.current_memory }}
+                </p>
+                <div class="price">{{ product.formatted_price }}</div>
+                <a href="/product/{{ product.product_id }}" class="btn btn-outline-primary mt-2">
+                    Подробнее
+                </a>
+                <a href="{{ url_for('add_to_cart', product_id=product.product_id) }}" class="btn btn-success mt-2">
+                    <i class="fas fa-cart-plus"></i> В корзину
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Категории -->
+<h2 class="mb-4">Категории</h2>
+<div class="row">
+    {% for category in categories %}
+    <div class="col-md-3 mb-3">
+        <a href="/catalog?category={{ category.name }}" class="text-decoration-none">
+            <div class="card category-badge">
+                <div class="card-body text-center">
+                    <h5>{{ category.name }}</h5>
+                    <span class="badge bg-primary">{{ category.count }} товаров</span>
+                </div>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Статистика -->
+<div class="row mt-5">
+    <div class="col-md-3 text-center">
+        <div class="card">
+            <div class="card-body">
+                <h3><i class="fas fa-mobile"></i></h3>
+                <h4>{{ total_products }}</h4>
+                <p>Всего товаров</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 text-center">
+        <div class="card">
+            <div class="card-body">
+                <h3><i class="fas fa-tags"></i></h3>
+                <h4>{{ categories|length }}</h4>
+                <p>Категорий</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 text-center">
+        <div class="card">
+            <div class="card-body">
+                <h3><i class="fas fa-star"></i></h3>
+                <h4>{{ featured_products|length }}</h4>
+                <p>Рекомендуемых</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 text-center">
+        <div class="card">
+            <div class="card-body">
+                <h3><i class="fas fa-sync"></i></h3>
+                <h4>Сегодня</h4>
+                <p>Обновлено</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
