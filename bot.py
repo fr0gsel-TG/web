@@ -15,7 +15,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Sends a message with a button that opens the web app."""
     await update.message.reply_text(
         "Welcome to TonStore!",
-        reply_markup={"inline_keyboard": [[{"text": "Open Store", "web_app": {"url": "http://localhost:5000"}}]]}
+        reply_markup={"inline_keyboard": [[{"text": "Open Store", "web_app": {"url": "https://web-e2hbpdqwk-fr0gsel1s-projects.vercel.app"}}]]}
     )
 
 async def web_app_data(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
