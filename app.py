@@ -153,6 +153,8 @@ class iPhoneCatalog:
 # Инициализация каталога
 catalog = iPhoneCatalog()
 
+
+
 @app.route('/')
 def index():
     """Главная страница"""
